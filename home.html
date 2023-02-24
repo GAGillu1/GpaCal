@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GPA Calculator University of New Haven</title>
+
+    <script>
+      function addRow() {
+    var table = document.getElementById("grades_table");
+    var row = table.insertRow(-1);
+    var courseCell = row.insertCell(0);
+    var creditsCell = row.insertCell(1);
+    var gradeCell = row.insertCell(2);
+    courseCell.innerHTML = '<input type="text" name="course">';
+    creditsCell.innerHTML = '<input type="text" name="credits">';
+    gradeCell.innerHTML = '<input type="text" name="grade">';
+    courseCell.getElementsByTagName('input')[0].focus();
+    row.scrollIntoView();
+}
+
+
+        function deleteRow() {
+            var table = document.getElementById("grades_table");
+            if (table.rows.length > 2) {
+                table.deleteRow(-1);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>GPA Calculator University of New Haven</h1>
+    <div class="">
+
+    <div class="inline">
+    <form method="POST">
+        <label for="country">Select country:</label>
+        <select id="country" name="country">
+            <option value="USA">USA</option>
+            <option value="India">India</option>
+            <option value="China">India</option>
+        </select>
+        <br>
+        <label for="grading_scale">Select grading scale:</label>
+        <select id="grading_scale" name="grading_scale">
+            <option value="USA">USA</option>
+        </select>
+        <br>
+        <table id="grades_table">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Credits or hours*</th>
+                    <th>Grade*</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" name="course" ></td>
+                    <td><input type="text" name="credits" ></td>
+                    <td><input type="text" name="grade"  ></td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="course"></td>
+                    <td><input type="text" name="credits"></td>
+                    <td><input type="text" name="grade"></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <button type="button" onclick="addRow()">Add Row</button>
+        <button type="button" onclick="deleteRow()">Delete Row</button>
+        <br>
+        <input type="submit" value="Calculate GPA">
+    </form>
+    </div>
+<div class="inline">
+     {% if gpa %}
+    <h3>GPA: {{ gpa }}</h3>
+<a href="/download_excel" download>
+  Download Excel
+</a>
+
+
+    {% endif %}
+
+    {% if scale %}
+    <h4>Scale:{{ scale |safe}}</h4>
+    {% endif %}
+</div> </div>
+
+    {% if output %}
+    <h4>output:{{ output |safe}}</h4>
+    {% endif %}
+
+
+
+</body>
+</html>
