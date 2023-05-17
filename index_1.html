@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>UNH GPA</title>
+  </head>
+  <body class="text-slate-900">
+    <nav class="text-xl flex justify-center">
+      <div class="">University of New Haven</div>
+    </nav>
+    <h2 class="flex justify-center text-2xl font-semibold">GPA CALCULATOR</h2>
+    <div class="lg:flex justify-center lg:gap-64 rounded m-20 h-screen py-5">
+      <div class="inputForm">
+        <div class="">
+          <p class="">Slate ID:</p>
+          <p class="slateId"></p>
+        </div>
+        <form onsubmit="event.preventDefault()">
+          <div class="my-2 flex items-center gap-1">
+            <label for="country">Country:</label>
+            <select
+              class="rounded border-2 border-slate-600"
+              id="country"
+              name="country"
+            >
+              <option value="USA">USA</option>
+              <option value="India">India</option>
+              <option value="China">India</option>
+            </select>
+          </div>
+          <div class="my-2 flex items-center gap-1">
+            <label for="grading_scale">Grading scale:</label>
+            <select
+              class="rounded border-2 border-slate-600"
+              id="grading_scale"
+              name="grading_scale"
+            >
+              <option value="USA">USA</option>
+            </select>
+          </div>
+          <table id="grades_table" style="">
+            <thead class="">
+              <tr>
+                <th>Course</th>
+                <th>Credits or hours*</th>
+                <th>Grade*</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <input
+                    class="px-1 border-2 border-slate-600 rounded-sm"
+                    type="text"
+                    name="course"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="px-1 border-2 border-slate-600 rounded-sm"
+                    type="number"
+                    name="credits"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="px-1 border-2 border-slate-600 rounded-sm"
+                    type="text"
+                    name="grade"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    class="px-1 border-2 border-slate-600 rounded-sm"
+                    type="text"
+                    name="course"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="px-1 border-2 border-slate-600 rounded-sm"
+                    type="number"
+                    name="credits"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="px-1 border-2 border-slate-600 rounded-sm"
+                    type="text"
+                    name="grade"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
+          <div class="flex justify-center items-center">
+            <select
+              name=""
+              id="rowsDrop"
+              class="border-2 border-slate-600 rounded px-1 h-8 mx-1"
+            >
+              <option value="1">1</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+              <option value="25">25</option>
+              <option value="30">30</option>
+              <option value="35">35</option>
+              <option value="40">40</option>
+            </select>
+            <button
+              class="bg-blue-800 text-center px-4 py-2 rounded m-1 text-white"
+              type="button"
+              onclick="addRows()"
+            >
+              Add Row
+            </button>
+            <button
+              class="bg-blue-800 text-center px-4 py-2 rounded m-1 text-white"
+              type="button"
+              onclick="deleteRow()"
+            >
+              Delete Row
+            </button>
+            <button
+              class="bg-blue-800 text-center px-4 py-2 rounded m-1 text-white"
+              type="submit"
+              onclick="call()"
+            >
+              Calculate GPA
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="outputTable flex justify-center my-20">
+        <div id="output" hidden>
+          <div id="gpaDown" class="flex">
+            <h3>GPA:</h3>
+            <p id="gpa"></p>
+          </div>
+          <div class="my-4">
+            <a
+              href="/download_excel"
+              download
+              class="px-4 py-2 bg-blue-800 text-white rounded"
+            >
+              Download
+            </a>
+          </div>
+          <div id="gradeTable">
+            <div id="countryUni"></div>
+            <table class="border-gray-700 border-2">
+              <thead class="">
+                <th class="border-2 border-gray-700 px-1">Grade</th>
+                <th class="border-2 border-gray-700 px-1">Scale</th>
+                <th class="border-2 border-gray-700 px-1">US Grade</th>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function addRows() {
+        let { value } = document.getElementById("rowsDrop");
+        for (let i = 0; i < value; i++) {
+          var table = document.getElementById("grades_table");
+          var row = table.insertRow(-1);
+          var courseCell = row.insertCell(0);
+          var creditsCell = row.insertCell(1);
+          var gradeCell = row.insertCell(2);
+          courseCell.innerHTML =
+            '<input class="px-1 border-2 border-slate-600 rounded-sm" type="text" name="course" />';
+          creditsCell.innerHTML =
+            '<input class="px-1 border-2 border-slate-600 rounded-sm" type="number" name="credits"/>';
+          gradeCell.innerHTML =
+            '<input class="px-1 border-2 border-slate-600 rounded-sm" type="text" name="grade" />';
+          if (i === 0) {
+            courseCell.getElementsByTagName("input")[0].focus();
+            row.scrollIntoView();
+          }
+        }
+      }
+
+      function deleteRow() {
+        var table = document.getElementById("grades_table");
+        if (table.rows.length > 2) {
+          table.deleteRow(-1);
+        }
+      }
+
+      async function call() {
+        console.log("in Cal");
+        const data = await fetch(
+          "https://63fbe49b1ff79e133295a2c7.mockapi.io/v1/GPA"
+        );
+        var res = await data.json();
+        document.getElementById("output").style.display = "block";
+        var body = document.getElementById("tableBody");
+        res.forEach((item) => {
+          let tr = document.createElement("tr");
+          tr.innerHTML = `<td class="border-2 border-slate-600 p-1 ">${item.country}</td><td class="border-2 border-slate-600 p-1 text-center">${item.scale}</td><td class="border-2 border-slate-600 p-1 text-center">${item.grade}</td>`;
+          body.appendChild(tr);
+          const form = document.querySelector('form');
+  const formData = new FormData(form);
+
+  // Convert the form data to a JSON object
+  const jsonObject = {};
+  for (const [key, value] of formData.entries()) {
+    jsonObject[key] = value;
+  }
+
+  // Send the JSON object to the server
+  fetch('/calculate_gpa', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(jsonObject)
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Handle the response from the server
+  })
+  .catch(error => {
+    console.error(error);
+    });
+
+        });
+      }
+    </script>
+  </body>
+</html>

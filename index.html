@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>UNH GPA</title>
+  </head>
+  <body class="text-slate-900">
+    <nav class="text-xl flex justify-between">
+      <div class="">University of New Haven</div>
+    </nav>
+    <h2 class="flex justify-center text-2xl font-semibold">GPA CALCULATOR</h2>
+    <div class="lg:flex justify-center lg:gap-64 rounded m-20 h-screen py-5">
+      <div class="inputForm">
+        <form method="POST">
+          <div class="my-2 flex items-center gap-1">
+            <label for="country">Country:</label>
+            <select class="rounded" id="country" name="country">
+              <option value="USA">USA</option>
+              <option value="India">India</option>
+              <option value="China">India</option>
+            </select>
+          </div>
+          <div class="my-2 flex items-center gap-1">
+            <label for="grading_scale">Grading scale:</label>
+            <select class="rounded" id="grading_scale" name="grading_scale">
+              <option value="USA">USA</option>
+            </select>
+          </div>
+          <table id="grades_table" style="">
+            <thead class="">
+              <tr>
+                <th>Course</th>
+                <th>Credits or hours*</th>
+                <th>Grade*</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <input
+                    class="border-2 border-slate-600 rounded-sm"
+                    type="text"
+                    name="course"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="border-2 border-slate-600 rounded-sm"
+                    type="text"
+                    name="credits"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="border-2 border-slate-600 rounded-sm"
+                    type="text"
+                    name="grade"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    class="border-2 border-slate-600 rounded-sm"
+                    type="text"
+                    name="course"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="border-2 border-slate-600 rounded-sm"
+                    type="text"
+                    name="credits"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="border-2 border-slate-600 rounded-sm"
+                    type="text"
+                    name="grade"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
+          <select name="" id="rowsDrop">
+            <option value="1">1</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+            <option value="30">30</option>
+            <option value="35">35</option>
+            <option value="40">40</option>
+          </select>
+          <button
+            class="bg-blue-800 text-center px-4 py-2 rounded m-1 text-white"
+            type="button"
+            onclick="addRows()"
+          >
+            Add Row
+          </button>
+          <button
+            class="bg-blue-800 text-center px-4 py-2 rounded m-1 text-white"
+            type="button"
+            onclick="deleteRow()"
+          >
+            Delete Row
+          </button>
+          <br />
+          <input
+            class="bg-blue-800 text-center px-4 py-2 rounded m-1 text-white"
+            type="submit"
+            value="Calculate GPA"
+          />
+        </form>
+      </div>
+      <div class="outputTable flex justify-center my-20">
+        <div class="">
+          {% if gpa %}
+          <h3>GPA: {{ gpa }}</h3>
+          <a href="/download_excel" download> Download Excel </a>
+          {% endif %} {% if scale %}
+          <h4>Scale:{{ scale|safe}}</h4>
+          {% endif %}
+           {% if output %}
+    <h4>output:{{ output |safe}}</h4>
+    {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function addRows() {
+        let { value } = document.getElementById("rowsDrop");
+        for (let i = 0; i < value; i++) {
+          var table = document.getElementById("grades_table");
+          var row = table.insertRow(-1);
+          var courseCell = row.insertCell(0);
+          var creditsCell = row.insertCell(1);
+          var gradeCell = row.insertCell(2);
+          courseCell.innerHTML =
+            '<input class="border-2 border-slate-600 rounded-sm" type="text" name="course" />';
+          creditsCell.innerHTML =
+            '<input class="border-2 border-slate-600 rounded-sm" type="text" name="credits"/>';
+          gradeCell.innerHTML =
+            '<input class="border-2 border-slate-600 rounded-sm" type="text" name="grade" />';
+          courseCell.getElementsByTagName("input")[0].focus();
+          row.scrollIntoView();
+        }
+      }
+
+      function deleteRow() {
+        var table = document.getElementById("grades_table");
+        if (table.rows.length > 2) {
+          table.deleteRow(-1);
+        }
+      }
+    </script>
+  </body>
+</html>

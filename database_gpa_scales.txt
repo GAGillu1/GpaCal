@@ -1,0 +1,48 @@
+Creating table countries . fields-  country_id  and country_name . PK - Country_id  : Country_id is varchar like "IN" for india
+
+		CREATE TABLE countries (
+			country_id varchar(10),
+			country_name VARCHAR(300),
+		  PRIMARY KEY (country_id)
+		);
+
+Create table universities - fields:uid , university_name , country_id . PK- uid,university_name . FK:country_id reference from countries table
+
+
+		CREATE TABLE universities (
+		  uid int default nextval('univid') ,
+		  university_name VARCHAR(255) ,
+		  country_id varchar(300) ,
+		  PRIMARY KEY (uid, university_name),
+		  FOREIGN KEY (country_id) REFERENCES countries(country_id)
+		);
+
+Create table caltab fields: id, university_id,grade,scales,usgrade,status PK: id
+		CREATE TABLE caltab (
+  id int default nextval('idseq'),
+  university_id INT NOT NULL,
+  grade VARCHAR(10),
+  scales VARCHAR(20),
+  usgrade VARCHAR(10),
+  status CHAR(1),
+  PRIMARY KEY (id)
+  --FOREIGN KEY (university_id) REFERENCES universities(id)
+);
+
+
+Create Index:
+
+
+
+Sequence:
+
+	CREATE SEQUENCE idseq
+	INCREMENT 1
+	START 1;
+
+
+	CREATE SEQUENCE univid
+INCREMENT 1
+START 1000;
+
+
